@@ -1,6 +1,8 @@
 package models
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Combat struct {
 	warior Warrior
@@ -17,8 +19,7 @@ func NewCombat(mySnake Snake, myWarrior Warrior) *Combat {
 func (c Combat) Fight() {
 	fmt.Printf("І повстав змій %s із попелу ядерного вогню\n", c.snake.name)
 	fmt.Printf("І пішла війна на знищення людства, і йшла десятиліття. На захист людства виступив %s\n", c.warior.name)
-	i := 0
-	for {
+	for i := 0; ; i++ {
 		punch := c.warior.WarriorPunch()
 
 		if punch < c.snake.headCount {
@@ -28,18 +29,12 @@ func (c Combat) Fight() {
 		}
 
 		if punch >= c.snake.headCount {
-			fmt.Printf("Точним ударом %s відтяв все що залишилось, змій здох\n", c.warior.name)
+			fmt.Printf("Точним ударом %s відтяв все що залишилось, змій повністю втратив мотивацію до битви\n", c.warior.name)
 			return
 		}
 
 		if c.snake.headCount > 200 {
-			fmt.Println("Воїн здох")
-		}
-
-		i++
-		if i == 200 {
-			fmt.Println("Всім надоїло і вони пішли спати")
-			return
+			panic("витязь запанікував, кинув меча та побіг кудись")
 		}
 	}
 

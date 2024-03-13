@@ -1,27 +1,39 @@
 package models
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+	"strings"
+)
 
 type Warrior struct {
 	name string
 }
 
-func NewWarrior() *Warrior {
-	return &Warrior{
-		name: WarriorGetName(),
+func NewWarrior() (*Warrior, error) {
+	name, err := WarriorGetName()
+	if err != nil {
+		return nil, err
 	}
+	return &Warrior{
+		name: name,
+	}, nil
 }
 
-func WarriorGetName() string {
+func WarriorGetName() (string, error) {
 	var (
-		WariorNameVariants    = [3]string{"Name_1", "Name_2", "Name_3"}
-		WariorSurnameVariants = [3]string{"Surname_1", "Surname_2", "Surname_3"}
-		WariorDignityVariants = [3]string{"Dignity_1", "Dignity_2", "Dignity_3"}
+		WariorNameVariants    = [3]string{"Олег", "Чорний", "Віктор"}
+		WariorSurnameVariants = [3]string{"Винник", "Лицар", "Федорович"}
+		WariorDignityVariants = [3]string{"Гучний", "Оболонський", "Слабкий"}
 	)
 	name := WariorNameVariants[RandGenerator(0, 2)]
 	surname := WariorSurnameVariants[RandGenerator(0, 2)]
 	dignity := WariorDignityVariants[RandGenerator(0, 2)]
-	return fmt.Sprintf("%s %s %s", name, surname, dignity)
+	fullName := fmt.Sprintf("%s %s %s", name, surname, dignity)
+	if strings.Contains(fullName, "Слабкий") {
+		return fullName, errors.New("воїн не прийшов")
+	}
+	return fullName, nil
 
 }
 
