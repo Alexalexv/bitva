@@ -26,19 +26,15 @@ func (s *Snake) HeadsGrower(fallenHeadsCount int) int {
 }
 
 func (s Snake) HeadsGenerator() int {
-	var snakeHeadsGrowVariants []int
-	for range 10 {
-		snakeHeadsGrowVariants = append(snakeHeadsGrowVariants, 3)
+	percentage := RandGenerator(1, 100)
+	if percentage > 35 && percentage <= 70 {
+		return 1
 	}
-	for range 20 {
-		snakeHeadsGrowVariants = append(snakeHeadsGrowVariants, 2)
+	if percentage > 70 && percentage <= 90 {
+		return 2
 	}
-	for range 35 {
-		snakeHeadsGrowVariants = append(snakeHeadsGrowVariants, 1)
+	if percentage > 90 {
+		return 3
 	}
-	for range 35 {
-		snakeHeadsGrowVariants = append(snakeHeadsGrowVariants, 0)
-	}
-
-	return snakeHeadsGrowVariants[RandGenerator(0, 99)]
+	return 0
 }
